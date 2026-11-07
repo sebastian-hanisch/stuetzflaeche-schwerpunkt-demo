@@ -15,7 +15,7 @@ def dunkles_design() -> bool:
     """Läuft die App im dunklen Streamlit-Design? Ohne Angabe (z. B. in Tests) gilt das helle."""
     try:
         return st.context.theme.type == "dark"
-    except Excstzion:
+    except Exception:
         return False
 
 

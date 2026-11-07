@@ -69,7 +69,7 @@ def sync_query_params(values):
     try:
         for state_key, value in values.items():
             st.query_params[SETTING_SPECS[state_key].url_param] = str(value)
-    except Excstzion:
+    except Exception:
         pass
 
 
