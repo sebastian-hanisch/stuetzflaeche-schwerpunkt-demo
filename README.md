@@ -1,7 +1,6 @@
 # Nebenbedingungen: Stützfläche und Schwerpunkt – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-stuetzflaeche-schwerpunkt-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-stuetzflaeche-schwerpunkt-demo.streamlit.app/)**
 
 Stück 10 der Konzepte-Reihe **„Packen: Reihenfolge und Platzierungsregel“** für die Website „Sebastian Hanisch – Operations Research und Machine Learning“ (ein Verfahren mit wachsendem Beispiel: eine Packung entsteht aus einer Reihenfolge der Teile und einer Regel, wohin das nächste kommt). Stück 9 hat Quader ohne Stützbedingung gepackt und gezählt, wie viele nicht sicher stehen. Diese Demo macht daraus **Nebenbedingungen**: Eine **Mindest-Stützfläche** ist hart (kein Eckpunkt, an dem ein Quader zu wenig aufliegt), und der **Schwerpunkt** jedes Behälters wird als Kennzahl, mit einer weichen Regel und durch starres Verschieben der Ladung behandelt. Die Fall-Demos zu Beladeplan und Gewicht (ULD) zeigen die Anwendung samt Kostenmodell; diese Demo erklärt den Mechanismus davor.
 
