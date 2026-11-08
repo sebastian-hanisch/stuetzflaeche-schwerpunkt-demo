@@ -6,7 +6,7 @@ Stück 10 der Konzepte-Reihe **„Packen: Reihenfolge und Platzierungsregel“**
 
 ## Warum dieses Problem
 
-Eine Stützbedingung ist für jede Beladung selbstverständlich, und sie verändert das Packen mehr, als man erwartet: Sie kostet Behälter, und sie **ändert den besten Sortierschlüssel**. Bei zwölf Quadern, die ohne Bedingung in einen Behälter passen, braucht das Volumen als Schlüssel mit 80 % Stützfläche zwei, die Grundfläche bleibt bei einem. Beim Schwerpunkt gibt es eine ehrliche Antwort: Eine weiche Regel und das starre Verschieben helfen oft, aber **einen harten Schwerpunkt liefert dieses Verfahren nicht**; das Orakel (CP-SAT) zeigt, dass die Aufgabe selbst das Fenster ohne Mehrkosten erlaubt. Die Grenze liegt im Verfahren, nicht in der Aufgabe.
+Eine Stützbedingung ist für die meisten Beladungen selbstverständlich, und sie verändert das Packen mehr, als man erwartet: Sie kostet im Mittel über diese Zellen und mit diesem Dekodierer Behälter, und sie **ändert den besten Sortierschlüssel**. Bei zwölf Quadern, die ohne Bedingung in einen Behälter passen, braucht das Volumen als Schlüssel mit 80 % Stützfläche zwei, die Grundfläche bleibt bei einem. Beim Schwerpunkt gibt es eine ehrliche Antwort: Eine weiche Regel und das starre Verschieben helfen oft, aber **einen harten Schwerpunkt liefert dieses Verfahren nicht**; das Orakel (CP-SAT) zeigt, dass ohne Stützbedingung und bei 12 und 20 Quadern die Aufgabe selbst das Fenster ohne Mehrkosten erlaubt; die Heuristik erreicht es dort oft nicht. Mit Stützbedingung und bei mehr Quadern ist das nicht gemessen.
 
 ## Modell
 
@@ -16,7 +16,7 @@ Quader mit ganzzahliger Breite, Tiefe und Höhe und einer Masse, ohne Drehung, i
 
 - **Kern** (`stz_algorithm.py`): `reihenfolge`, `pack` (Extreme Points mit Projektionen, Mindest-Stützfläche und Schwerpunktregel; liefert Behälter, Platzierungen und die Eckpunkte je Behälter; ein Anfang der Reihenfolge liefert den Zustand nach so vielen Schritten), `stuetzflaeche`, `schwerpunkt_behaelter`, `schwerpunkte`, `verschieben`, `schranken`, `packung_pruefen` (unabhängiger Prüfer).
 - **Handbeispiele:** zwei feste Mengen von je zwölf Quadern mit Massen. Die App zeichnet einen gewählten Behälter in 3D (Farbe nach Stützfläche oder Reihenfolge, Schwerpunkt als Kreuz, Fenster am Boden, Eckpunkte) und zeigt alle 16 Kombinationen aus Schlüssel und Mindest-Stützfläche.
-- **Messraster:** vier Verteilungen × drei Quaderzahlen (20, 40, 80) × **100 feste Instanzen** je Zelle × vier Schlüssel × vier Werte der Mindest-Stützfläche, dazu die Schwerpunkt-Varianten (Mindest-Stützfläche 80 %, Schlüssel Grundfläche). Maßstab ist die Schranke (locker; ein Optimum mit Stützbedingung gibt es nicht). Die Summen stehen als ganze Zahlen in `stz_precomputed.json` (erzeugt von `generate_precomputed.py`).
+- **Messraster:** vier Verteilungen × drei Quaderzahlen (20, 40, 80) × **100 feste Instanzen** je Zelle × vier Schlüssel × vier Werte der Mindest-Stützfläche, dazu die Schwerpunkt-Varianten (Mindest-Stützfläche 80 %, Schlüssel Grundfläche). Maßstab ist die Schranke (vermutlich locker, wie in Stück 9 bei 12 und 20 Quadern gemessen; ein Optimum mit Stützbedingung gibt es nicht). Die Summen stehen als ganze Zahlen in `stz_precomputed.json` (erzeugt von `generate_precomputed.py`).
 - **Orakel mit hartem Schwerpunktfenster:** bei 12 Quadern 40, bei 20 Quadern 20 Instanzen je Verteilung (eigene Seeds), CP-SAT mit 20 beziehungsweise 30 Sekunden Zeitlimit je Instanz, Fenster ±5, **ohne Stützbedingung** (sie lässt sich nicht linear ausdrücken).
 
 ## Befunde (gemessen, keine Behauptungen)
@@ -31,10 +31,10 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 | Ändert die Bedingung den besten Schlüssel? | **Ja.** Ohne Bedingung ist das Volumen in **10** von 12 Zellen allein der beste Schlüssel (zwei Zellen mit kleinen Quadern gleichauf mit anderen); mit 80 % und mit 100 % ist es die **Grundfläche in allen 12** Zellen. Bei 50 % ist es gemischt (Volumen allein in 8) |
 | Instanz für Instanz | Von 1200 Instanzen braucht die Mindest-Stützfläche 80 % mit dem Volumen in **814** mehr Behälter als ohne Bedingung, mit der Grundfläche in **512**; bei 100 % in 1073 beziehungsweise 746 |
 | Hilft die weiche Regel „nah“? | Sie bringt **1 bis 95 %** der Behälter ins Fenster ±5 (ohne Regel 1 bis 50 %): am meisten bei kleinen Quadern (n = 20: 38 → 95 %), kaum bei flachen (1 bis 3 %). Sie ändert die Behälterzahl um −0,22 bis +0,07 |
-| Hilft das starre Verschieben? | Es kostet **keinen** Behälter. Mit „nah“ und Verschieben liegen **44 bis 100 %** der Behälter im Fenster ±5 und **69 bis 100 %** im Fenster ±10; **eine Garantie ist es nicht** (wo die Ladung die ganze Breite oder Tiefe füllt, gibt es nichts zu verschieben) |
+| Hilft das starre Verschieben? | Es kostet **keinen** Behälter. Mit „nah“ und Verschieben liegen **44 bis 100 %** der Behälter im Fenster ±5 und **69 bis 100 %** im Fenster ±10; **eine Garantie ist es nicht** (wo die Ladung die ganze Breite oder Tiefe füllt oder schon an einer Wand anliegt, bleibt wenig oder nichts zu verschieben) |
 | Hilft „schwere zuerst“? | **Nein:** Der Schlüssel Masse (mit „nah“) braucht in allen 12 Zellen mehr Behälter als die Grundfläche (+0,16 bis +2,55) und bringt den Anteil im Fenster nirgends um mehr als 1 Prozentpunkt nach oben |
-| Geht ein harter Schwerpunkt mit einer Füllschwelle? | **Nur teuer und lückenhaft:** Ab 50 % Füllung kostet die harte Regel bis zu **+1,89** Behälter gegenüber „nah“ (mittlere Quader, n = 80), und die Garantie gilt nur für die 0 bis 46 % der Behälter über der Schwelle; ab 75 % sind es höchstens +0,05 und 0 bis 20 % der Behälter |
-| Was wäre im besten Fall möglich? | Das **Orakel** (freie Platzierung, ohne Stützbedingung): Das harte Fenster ±5 braucht in **236 von 236** entschiedenen Instanzen genauso viele Behälter wie ohne Fenster (4 von 240 nicht entschieden). Die Grenze liegt im Dekodierer, nicht in der Aufgabe |
+| Geht ein harter Schwerpunkt mit einer Füllschwelle? | **Nur teuer (ab 50 %) oder lückenhaft (ab 75 %):** Ab 50 % Füllung kostet die harte Regel bis zu **+1,89** Behälter gegenüber „nah“ (mittlere Quader, n = 80), und die Garantie gilt nur für die 0 bis 46 % der Behälter über der Schwelle; ab 75 % sind es höchstens +0,05 und 0 bis 20 % der Behälter |
+| Was wäre im besten Fall möglich? | Das **Orakel** (freie Platzierung, ohne Stützbedingung, bei 12 und 20 Quadern): Das harte Fenster ±5 braucht in **236 von 236** entschiedenen Instanzen genauso viele Behälter wie ohne Fenster (4 von 240 nicht entschieden); die Heuristik erreicht das Fenster dort oft nicht. Mit Stützbedingung und bei mehr Quadern ist das nicht gemessen |
 
 **Beispiel 1** (Behälterzahl je Schlüssel und Mindest-Stützfläche):
 
@@ -44,7 +44,7 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 
 {{BEISPIEL_2}}
 
-**Behälter über der Schranke** (Mittel über 100 Instanzen je Zelle; Mindest-Stützfläche 0 / 50 / 80 / 100 %; kein Optimum, die Schranke ist locker, dort zählt nur der Vergleich der Kombinationen):
+**Behälter über der Schranke** (Mittel über 100 Instanzen je Zelle; Mindest-Stützfläche 0 / 50 / 80 / 100 %; kein Optimum, die Schranke ist vermutlich locker, dort zählt nur der Vergleich der Kombinationen):
 
 {{TABELLE_A}}
 
@@ -65,7 +65,7 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 - Alle Aussagen gelten für Quader ohne Drehung, vier Verteilungen mit festen Bereichen, Quaderzahlen 20, 40 und 80 im Raster (12 und 20 beim Orakel), eine Behältergröße, **zufällige Massen** (keine Praxisdaten), **einen** Dekodierer (Extreme Points mit Projektionen, eigene Lesart) mit der Wahl „tiefster, hinterster, linkester Eckpunkt“ beziehungsweise den Schwerpunktregeln. Stapellast, Gewichtsgrenzen je Behälter und Drehung kommen nicht vor.
 - **Ein harter Schwerpunkt wird nicht geliefert.** Die Regeln und das Verschieben verbessern ihn, garantieren ihn aber nicht; die harte Regel ab einer Füllschwelle ist ein Gegenbeispiel. Das Orakel zeigt, was bei freier Platzierung möglich wäre.
 - Ein **Optimum mit Stützbedingung** fehlt: CP-SAT kann die Stützfläche nicht linear ausdrücken. Das Orakel gilt ohne sie; die Schranken sind mit Bedingung nur eine untere Grenze.
-- Die Anteile im Fenster zählen Behälter; der letzte Behälter einer Packung ist meist nur teilweise gefüllt und liegt häufiger außerhalb.
+- Die Anteile im Fenster zählen Behälter; der letzte Behälter einer Packung ist meist nur teilweise gefüllt und liegt ohne Verschieben häufiger außerhalb (mit Verschieben dagegen seltener, vermutlich weil die dünn gefüllte Ladung Spielraum hat).
 - Die Projektionen der Eckpunkte sind nach eigener Lesart umgesetzt (Stück 9); es wird keine Zahl und keine Aussage der Literatur übernommen.
 - Zur **Laufzeit** macht die Demo keine Aussage.
 

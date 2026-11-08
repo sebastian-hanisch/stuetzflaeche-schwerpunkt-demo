@@ -52,7 +52,7 @@ with st.container(key="kopf"):
     st.title("⚖️ Nebenbedingungen: Stützfläche und Schwerpunkt")
 st.markdown(
     """
-Stück 9 hat gezeigt: Ohne Stützbedingung stehen viele Quader nicht sicher. Hier wird die **Mindest-Stützfläche** zur harten Bedingung. Drei Fragen: **Was kostet sie in Behältern**, **ändert sie den besten Sortierschlüssel**, und **wie weit kommt man beim Schwerpunkt**? Beim Schwerpunkt gibt es eine ehrliche Antwort: Eine weiche Regel und das starre Verschieben der Ladung helfen oft, aber **einen harten Schwerpunkt liefert dieses Verfahren nicht**. Das Orakel (CP-SAT) zeigt, dass die Aufgabe selbst das Fenster ohne Mehrkosten erlaubt; die Grenze liegt im Verfahren.
+Stück 9 hat gezeigt: Ohne Stützbedingung stehen viele Quader nicht sicher. Hier wird die **Mindest-Stützfläche** zur harten Bedingung. Drei Fragen: **Was kostet sie in Behältern**, **ändert sie den besten Sortierschlüssel**, und **wie weit kommt man beim Schwerpunkt**? Beim Schwerpunkt gibt es eine ehrliche Antwort: Eine weiche Regel und das starre Verschieben der Ladung helfen oft, aber **einen harten Schwerpunkt liefert dieses Verfahren nicht**. Das Orakel (CP-SAT) zeigt, dass ohne Stützbedingung und bei 12 und 20 Quadern die Aufgabe selbst das Fenster ohne Mehrkosten erlaubt; die Heuristik erreicht es dort oft nicht. Mit Stützbedingung und bei mehr Quadern ist das nicht gemessen.
 
 Weiter unten: der Abschnitt **🔬 Experimente**, **🚧 Wo die Annahmen enden**, der Expander **⚠️ Annahmen, Grenzen und bekannte Probleme** und der Expander **📐 Mathematische Formulierung**.
 """
@@ -177,7 +177,7 @@ tab = ["| Schlüssel | " + " | ".join(C.S_MIN_KURZ[si] for si in S_LISTE) + " |"
 for k in SCHLUESSEL_LISTE:
     tab.append(f"| {C.SCHLUESSEL_KURZ[k]} | " + " | ".join(f"{z['mittel'][k][si]:.2f}" for si in S_LISTE) + " |")
 st.markdown("\n".join(tab))
-st.caption("Mittlere Behälter über der Volumenschranke (Schlüssel in den Zeilen, Mindest-Stützfläche in den Spalten), Mittel über die Instanzen der Zelle. Bei 20 bis 80 Quadern fehlt das Optimum, die Schranke ist locker: Lesen Sie die Unterschiede, nicht den Abstand.")
+st.caption("Mittlere Behälter über der Schranke (Schlüssel in den Zeilen, Mindest-Stützfläche in den Spalten), Mittel über die Instanzen der Zelle. Bei 20 bis 80 Quadern fehlt das Optimum, die Schranke ist vermutlich locker: Lesen Sie die Unterschiede, nicht den Abstand.")
 kind, text = verdict_kosten(z)
 getattr(st, kind)(text)
 
@@ -230,7 +230,7 @@ st.markdown(
     """
 | Annahme | Was passiert, wenn sie verletzt ist |
 |---|---|
-| **Kein harter Schwerpunkt** | Die weiche Regel und das Verschieben helfen oft, garantieren aber nichts: Füllt die Ladung die ganze Breite oder Tiefe, gibt es nichts zu verschieben. Die harte Regel ab einer Füllschwelle ist teuer und schützt nur Behälter über der Schwelle (Experiment 5). |
+| **Kein harter Schwerpunkt** | Die weiche Regel und das Verschieben helfen oft, garantieren aber nichts: Füllt die Ladung die ganze Breite oder Tiefe oder liegt sie schon an einer Wand, bleibt wenig oder nichts zu verschieben. Die harte Regel ab einer Füllschwelle ist teuer und schützt nur Behälter über der Schwelle (Experiment 5). |
 | **Kein Optimum mit Stützbedingung** | Die Stützfläche lässt sich in CP-SAT nicht linear ausdrücken; die Demo vergleicht nur Kombinationen und den Abstand zur Schranke. Das Orakel mit hartem Fenster gilt ohne Stützbedingung. |
 | **Massen sind zufällig** | Die Massen sind Volumen mal eine zufällige Dichte; echte Ladungen können schwere Teile bündeln. Praxisdaten sind nicht gemessen. |
 | **Keine Drehung, keine Stapellast** | Dürfen die Quader gedreht werden oder tragen sie nur begrenzt Last, ändert sich die Aufgabe; die Demo misst es nicht. |

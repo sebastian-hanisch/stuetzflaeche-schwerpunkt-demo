@@ -43,7 +43,7 @@ def test_aktuell_bedingung_kostet_nichts_und_bedingung_spart():
     kind, text = ev.verdict_aktuell(_a(G, 2, 1, 1, 1, t))
     assert kind == "info" and "Die Bedingung kostet hier nichts." in text and "Für diese Bedingung ist das einer der besten Schlüssel dieser Instanz." in text and "Das ist das Optimum ohne Stützbedingung" in text
     kind, text = ev.verdict_aktuell(_a(G, 2, 1, 2, None, t))
-    assert kind == "success" and "Die Bedingung spart hier 1 (die Reihenfolge der Quader ändert sich)." in text
+    assert kind == "success" and "Die Bedingung spart hier 1 (die Platzierung der Quader ändert sich, die Reihenfolge nicht)." in text
 
 
 def test_tabellenverdikt_drei_faelle():
@@ -133,7 +133,7 @@ def test_schwerpunktraster_verdikt_prozente_und_der_zweig_100():
     kind, text = ev.verdict_schwerpunkt_raster(_z(sp=sp))
     assert kind == "warning"
     assert text == ("Für mittlere Quader mit n = 40 liegen im Fenster ±5 ohne Regel 11 %, mit der Regel „nah“ 19 % und mit „nah“ und Verschieben 68 % der Behälter (im Fenster ±10 mit „nah“ und Verschieben 97 %). "
-                    "Das ist **keine Garantie**: Wo die Ladung die ganze Breite oder Tiefe füllt, gibt es nichts zu verschieben.")
+                    "Das ist **keine Garantie**: Wo die Ladung die ganze Breite oder Tiefe füllt oder schon an einer Wand anliegt, bleibt wenig oder nichts zu verschieben.")
     kind, text = ev.verdict_schwerpunkt_raster(_z(sp=_sp(nah_verschoben={"im5": 99.6, "im10": 100.0})))
     assert kind == "success" and "ein Fenster für alle Behälter" in text
 
@@ -154,7 +154,7 @@ def test_fensterorakel_verdikt():
     kind, text = ev.verdict_fenster(zeilen)
     assert kind == "success"
     assert text == ("Mit freier Platzierung braucht das harte Schwerpunktfenster ±5 in **79** von 79 entschiedenen Instanzen genauso viele Behälter wie ohne Fenster und in 0 mehr "
-                    "(ohne Stützbedingung, Quaderzahlen 12 und 20). Die Grenze liegt im Dekodierer, nicht in der Aufgabe: Mit Eckpunkten ist die Mitte oft nicht erreichbar.")
+                    "(ohne Stützbedingung, Quaderzahlen 12 und 20). Ohne Stützbedingung und bei 12 und 20 Quadern erlaubt die Aufgabe das Fenster also ohne Mehrkosten; mit Eckpunkten ist die Mitte oft nicht erreichbar. Mit Stützbedingung und bei mehr Quadern ist das nicht gemessen.")
     zeilen[1] = {**zeilen[1], "gleich": 39, "mehr": 1}
     kind, text = ev.verdict_fenster(zeilen)
     assert kind == "info" and "in **78** von 79" in text and "und in 1 mehr" in text and "kostet das Fenster Behälter" in text

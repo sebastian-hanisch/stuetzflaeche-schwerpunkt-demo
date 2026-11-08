@@ -132,7 +132,7 @@ def verdict_aktuell(a: Analysis) -> tuple[str, str]:
     if a.count > a.ohne:
         return "warning", kopf + f" Die Bedingung kostet hier {a.count - a.ohne}." + opt_teil + passt
     if a.count < a.ohne:
-        return "success", kopf + f" Die Bedingung spart hier {a.ohne - a.count} (die Reihenfolge der Quader ändert sich)." + opt_teil + passt
+        return "success", kopf + f" Die Bedingung spart hier {a.ohne - a.count} (die Platzierung der Quader ändert sich, die Reihenfolge nicht)." + opt_teil + passt
     return "info", kopf + " Die Bedingung kostet hier nichts." + opt_teil + passt
 
 
@@ -297,7 +297,7 @@ def verdict_schwerpunkt_raster(z: dict) -> tuple[str, str]:
             f"(im Fenster ±10 mit „nah“ und Verschieben {d} %).")
     if c == 100:
         return "success", teil + " Hier liefert die Kombination ein Fenster für alle Behälter."
-    return "warning", teil + " Das ist **keine Garantie**: Wo die Ladung die ganze Breite oder Tiefe füllt, gibt es nichts zu verschieben."
+    return "warning", teil + " Das ist **keine Garantie**: Wo die Ladung die ganze Breite oder Tiefe füllt oder schon an einer Wand anliegt, bleibt wenig oder nichts zu verschieben."
 
 
 def verdict_hart(z: dict) -> tuple[str, str]:
@@ -333,5 +333,5 @@ def verdict_fenster(zeilen: list) -> tuple[str, str]:
     teil = (f"Mit freier Platzierung braucht das harte Schwerpunktfenster ±5 in **{gleich}** von {entschieden} entschiedenen Instanzen genauso viele Behälter wie ohne Fenster und in {mehr} mehr "
             "(ohne Stützbedingung, Quaderzahlen 12 und 20).")
     if mehr == 0:
-        return "success", teil + " Die Grenze liegt im Dekodierer, nicht in der Aufgabe: Mit Eckpunkten ist die Mitte oft nicht erreichbar."
+        return "success", teil + " Ohne Stützbedingung und bei 12 und 20 Quadern erlaubt die Aufgabe das Fenster also ohne Mehrkosten; mit Eckpunkten ist die Mitte oft nicht erreichbar. Mit Stützbedingung und bei mehr Quadern ist das nicht gemessen."
     return "info", teil + " In diesen Instanzen kostet das Fenster Behälter."
