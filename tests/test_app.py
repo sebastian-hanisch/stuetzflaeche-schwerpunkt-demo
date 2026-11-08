@@ -116,7 +116,7 @@ def test_schritt_und_behaelter_regler_halten_ihre_grenzen():
 def test_expander_und_experimente_stehen_unter_ihren_namen():
     at = _fresh_app()
     labels = [e.label for e in at.expander]
-    assert "📐 Mathematische Formulierung" in labels and "⚠️ Annahmen, Grenzen und bekannte Probleme" in labels
+    assert "💬 In einfachen Worten" in labels and "📐 Mathematische Formulierung" in labels and "⚠️ Annahmen, Grenzen und bekannte Probleme" in labels
     markdown = [m.value for m in at.markdown]
     for titel in ("### Experiment 1: Was kostet die Stützbedingung?", "### Experiment 2: Ändert die Bedingung den besten Schlüssel?", "### Experiment 3: Wie weit kommt man beim Schwerpunkt?",
                   "### Experiment 4: Was wäre im besten Fall möglich? (Orakel)", "### Experiment 5: Warum kein harter Schwerpunkt? (Gegenbeispiel)"):

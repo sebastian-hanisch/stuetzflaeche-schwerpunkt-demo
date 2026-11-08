@@ -64,8 +64,8 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 
 - Alle Aussagen gelten für Quader ohne Drehung, vier Verteilungen mit festen Bereichen, Quaderzahlen 20, 40 und 80 im Raster (12 und 20 beim Orakel), eine Behältergröße, **zufällige Massen** (keine Praxisdaten), **einen** Dekodierer (Extreme Points mit Projektionen, eigene Lesart) mit der Wahl „tiefster, hinterster, linkester Eckpunkt“ beziehungsweise den Schwerpunktregeln. Stapellast, Gewichtsgrenzen je Behälter und Drehung kommen nicht vor.
 - **Ein harter Schwerpunkt wird nicht geliefert.** Die Regeln und das Verschieben verbessern ihn, garantieren ihn aber nicht; die harte Regel ab einer Füllschwelle ist ein Gegenbeispiel. Das Orakel zeigt, was bei freier Platzierung möglich wäre.
-- Ein **Optimum mit Stützbedingung** fehlt: CP-SAT kann die Stützfläche nicht linear ausdrücken. Das Orakel gilt ohne sie; die Schranken sind mit Bedingung nur eine untere Grenze.
-- Die Anteile im Fenster zählen Behälter; der letzte Behälter einer Packung ist meist nur teilweise gefüllt und liegt ohne Verschieben häufiger außerhalb (mit Verschieben dagegen seltener, vermutlich weil die dünn gefüllte Ladung Spielraum hat).
+- Ein **Optimum mit Stützbedingung** fehlt: die Stützfläche ist im CP-SAT-Modell nicht abgebildet. Das Orakel gilt ohne sie; die Schranken sind mit Bedingung nur eine untere Grenze.
+- Die Anteile im Fenster zählen Behälter; der letzte Behälter einer Packung ist meist nur teilweise gefüllt; ob er häufiger außerhalb des Fensters liegt, hängt von der Zelle ab und ist nicht getestet (mit Verschieben vermutlich seltener, weil die dünn gefüllte Ladung Spielraum hat).
 - Die Projektionen der Eckpunkte sind nach eigener Lesart umgesetzt (Stück 9); es wird keine Zahl und keine Aussage der Literatur übernommen.
 - Zur **Laufzeit** macht die Demo keine Aussage.
 

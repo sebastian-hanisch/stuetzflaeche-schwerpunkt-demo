@@ -54,9 +54,20 @@ st.markdown(
     """
 Stück 9 hat gezeigt: Ohne Stützbedingung stehen viele Quader nicht sicher. Hier wird die **Mindest-Stützfläche** zur harten Bedingung. Drei Fragen: **Was kostet sie in Behältern**, **ändert sie den besten Sortierschlüssel**, und **wie weit kommt man beim Schwerpunkt**? Beim Schwerpunkt gibt es eine ehrliche Antwort: Eine weiche Regel und das starre Verschieben der Ladung helfen oft, aber **einen harten Schwerpunkt liefert dieses Verfahren nicht**. Das Orakel (CP-SAT) zeigt, dass ohne Stützbedingung und bei 12 und 20 Quadern die Aufgabe selbst das Fenster ohne Mehrkosten erlaubt; die Heuristik erreicht es dort oft nicht. Mit Stützbedingung und bei mehr Quadern ist das nicht gemessen.
 
-Weiter unten: der Abschnitt **🔬 Experimente**, **🚧 Wo die Annahmen enden**, der Expander **⚠️ Annahmen, Grenzen und bekannte Probleme** und der Expander **📐 Mathematische Formulierung**.
+Wer die Frage zuerst ohne Fachbegriffe verstehen will, öffnet „💬 In einfachen Worten“. Weiter unten: der Abschnitt **🔬 Experimente**, **🚧 Wo die Annahmen enden**, der Expander **⚠️ Annahmen, Grenzen und bekannte Probleme** und der Expander **📐 Mathematische Formulierung**.
 """
 )
+
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/packen-stuetzflaeche-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Ein Packverfahren lädt Quader der Reihe nach in Behälter. Dieses Programm fragt, was zwei Bedingungen kosten, die in der Praxis selbstverständlich sind. Erstens darf kein Quader schweben: Er muss mit einem Mindestanteil seiner Grundfläche auf dem Boden oder auf anderen Quadern aufliegen. Zweitens soll der Schwerpunkt der Ladung nahe der Mitte des Behälters liegen. Gesucht ist die Packung mit möglichst wenigen Behältern. Das Programm zeigt, wie viele Behälter die Aufliegebedingung zusätzlich kostet und ob sie ändert, nach welchem Maß man die Quader am besten vorsortiert. Beim Schwerpunkt prüft es eine weiche Regel und das gemeinsame Verschieben der Ladung eines Behälters. Einen harten Schwerpunkt liefert das Verfahren nicht; das Programm zeigt die Grenze. Alle Quader und Massen sind erfunden.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/packen-stuetzflaeche-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
 
 with st.expander("So funktionieren die Bedingungen", expanded=True):
     st.markdown(
@@ -245,6 +256,25 @@ with st.expander("⚠️ Annahmen, Grenzen und bekannte Probleme"):
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/packen-stuetzflaeche-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind $n$ Quader mit ganzzahliger Breite, Tiefe und Höhe und einer Masse sowie Behälter der Größe $C \times C \times C$. Gesucht ist eine überlappungsfreie Platzierung aller Quader in möglichst wenigen Behältern, bei der jeder Quader auf mindestens dem Anteil $s$ seiner Grundfläche aufliegt und der Schwerpunkt jedes Behälters möglichst nahe der Mitte liegt.
+
+| Symbol | Bedeutung |
+|---|---|
+| $n$ | Zahl der Quader |
+| $w_i$, $d_i$, $h_i$, $m_i$ | Breite, Tiefe, Höhe und Masse von Quader $i$ |
+| $C$ | Kantenlänge eines Behälters |
+| $(x_i, y_i, z_i)$ | linke hintere untere Ecke von Quader $i$ |
+| $s$ | Mindest-Stützfläche (Anteil der Grundfläche, der aufliegen muss) |
+| $f$ | Fenster: halbe Breite um die Mitte $C/2$, in der der Schwerpunkt liegen soll |
+| $\mathrm{OPT}$ | kleinste mögliche Zahl von Behältern über alle Platzierungen |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/packen-stuetzflaeche-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Lesehilfe.** *Gegeben:* Quader mit ganzzahliger Breite, Tiefe und Höhe, Massen und Behälter der Größe $C \times C \times C$. *Gesucht:* eine überlappungsfreie Platzierung aller Quader in möglichst wenigen Behältern, bei der jeder Quader auf mindestens $s$ seiner Grundfläche aufliegt und der Schwerpunkt jedes Behälters möglichst nahe der Mitte liegt.
