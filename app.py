@@ -62,7 +62,7 @@ Wer die Frage zuerst ohne Fachbegriffe verstehen will, öffnet „💬 In einfac
 with st.expander("💬 In einfachen Worten"):
     st.markdown(
         """
-Ein Packverfahren lädt Quader der Reihe nach in Behälter. Dieses Programm fragt, was zwei Bedingungen kosten, die in der Praxis selbstverständlich sind. Erstens darf kein Quader schweben: Er muss mit einem Mindestanteil seiner Grundfläche auf dem Boden oder auf anderen Quadern aufliegen. Zweitens soll der Schwerpunkt der Ladung nahe der Mitte des Behälters liegen. Gesucht ist die Packung mit möglichst wenigen Behältern. Das Programm zeigt, wie viele Behälter die Aufliegebedingung zusätzlich kostet und ob sie ändert, nach welchem Maß man die Quader am besten vorsortiert. Beim Schwerpunkt prüft es eine weiche Regel und das gemeinsame Verschieben der Ladung eines Behälters. Einen harten Schwerpunkt liefert das Verfahren nicht; das Programm zeigt die Grenze. Alle Quader und Massen sind erfunden.
+Ein Packverfahren lädt Quader der Reihe nach in Behälter. Dieses Programm fragt, was zwei Bedingungen kosten, die in der Praxis selbstverständlich sind. Erstens darf kein Quader schweben: Er muss mit einem Mindestanteil seiner Grundfläche (Mindest-Stützfläche) auf dem Boden oder auf anderen Quadern aufliegen. Zweitens soll der Schwerpunkt der Ladung nahe der Mitte des Behälters liegen. Gesucht ist die Packung mit möglichst wenigen Behältern. Das Programm zeigt, wie viele Behälter die Mindest-Stützfläche zusätzlich kostet und ob sie ändert, nach welchem Maß man die Quader am besten vorsortiert. Beim Schwerpunkt prüft es eine weiche Regel und das gemeinsame Verschieben der Ladung eines Behälters. Einen harten Schwerpunkt liefert das Verfahren nicht; das Programm zeigt die Grenze. Alle Quader und Massen sind erfunden.
 
 [Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/packen-stuetzflaeche-erklaert.html)
         """
@@ -73,7 +73,7 @@ with st.expander("So funktionieren die Bedingungen", expanded=True):
     st.markdown(
         """
 1. **Stützfläche:** Der Packer ist Extreme Points mit Projektionen aus Stück 9. Ein Eckpunkt ist jetzt nur zulässig, wenn der Quader dort auf mindestens dem gewählten Anteil seiner Grundfläche aufliegt (auf dem Boden oder auf den Oberseiten anderer Quader). Schweben ist bei jeder Bedingung über 0 % verboten.
-2. **Schwerpunkt:** Jeder Quader hat eine Masse. Der Schwerpunkt eines Behälters ist der Mittelwert der Mittelpunkte seiner Quader, gewichtet mit der Masse, in x und y; das **Fenster** ist die halbe Breite um die Mitte der Grundfläche. Die Regel *nah* wählt unter den zulässigen Eckpunkten den, bei dem der Schwerpunkt der Mitte am nächsten liegt. **Verschieben** schiebt die ganze Ladung eines Behälters starr in x und y, so nahe an die Mitte, wie die Hüllbox der Ladung erlaubt: Das kostet keinen Behälter und ändert die Stützflächen nicht.
+2. **Schwerpunkt:** Jeder Quader hat eine Masse. Der Schwerpunkt eines Behälters ist der Mittelwert der Mittelpunkte seiner Quader, gewichtet mit der Masse, in x und y; das **Fenster** ist die halbe Breite um die Mitte der Grundfläche. Die Regel *nah* wählt unter den zulässigen Eckpunkten den, bei dem der Schwerpunkt der Mitte am nächsten liegt. **Verschieben** schiebt die ganze Ladung eines Behälters starr in x und y, so nahe an die Mitte, wie die Bounding Box der Ladung erlaubt: Das kostet keinen Behälter und ändert die Stützflächen nicht.
 3. **Farbe:** In der 3D-Ansicht zeigt die Farbe die Stützfläche jedes Quaders (grün 100 %, hellgrün ab 80 %, gelb ab 50 %, orange darunter, rot schwebend) oder die Reihenfolge des Setzens. Das schwarze Kreuz am Boden ist der Schwerpunkt, das grüne Rechteck das Fenster.
         """
     )
@@ -90,7 +90,7 @@ with st.sidebar:
     quelle = st.selectbox("Instanz", list(C.QUELLEN), format_func=C.QUELLEN.get, key="quelle_select",
                           help="Die beiden Beispiele haben je zwölf feste Quader mit Massen. Die anderen vier sind Zufallsinstanzen mit verschiedener Verteilung der Kanten.")
     n_index = st.selectbox("Zahl der Quader (nur Zufallsinstanzen)", list(range(len(C.N_WERTE))), format_func=lambda i: str(C.N_WERTE[i]), key="n_select", help="Gilt nur für Zufallsinstanzen.")
-    seed = st.number_input("Startzahl der Zufallsinstanz", *bounds("seed_input"), key="seed_input", step=1, help="Wirkt nur bei den Zufallsinstanzen.")
+    seed = st.number_input("Zufalls-Seed der Zufallsinstanz", *bounds("seed_input"), key="seed_input", step=1, help="Wirkt nur bei den Zufallsinstanzen.")
     st.button("🎲 Neue Zufallsinstanz würfeln", width="stretch", on_click=randomize_seed)
     st.markdown("**Packen**")
     schluessel = st.selectbox("Sortierschlüssel", list(C.SCHLUESSEL), format_func=C.SCHLUESSEL.get, key="schluessel_select", help="Wonach die Quader sortiert werden, absteigend.")
@@ -100,7 +100,7 @@ with st.sidebar:
     regel = st.selectbox("Regel für die Wahl des Eckpunkts", list(C.REGELN), format_func=C.REGELN.get, key="regel_select",
                          help="„nah“: unter den zulässigen Eckpunkten der, bei dem der Schwerpunkt des Behälters der Mitte am nächsten liegt.")
     verschieben = st.selectbox("Ladung verschieben", [0, 1], format_func=lambda i: "aus" if i == 0 else "ein (starr, je Behälter)", key="verschieben_select",
-                               help="Schiebt alle Quader eines Behälters gemeinsam in x und y so nahe an die Mitte, wie die Hüllbox der Ladung erlaubt.")
+                               help="Schiebt alle Quader eines Behälters gemeinsam in x und y so nahe an die Mitte, wie die Bounding Box der Ladung erlaubt.")
     fenster = st.number_input("Fenster (halbe Breite um die Mitte)", *bounds("fenster_input"), key="fenster_input", step=1, help="Der Schwerpunkt liegt im Fenster, wenn er in x und y höchstens so weit von der Mitte (50) entfernt ist.")
     st.markdown("**Ansicht**")
     schritt = st.number_input("Schritt (0 = alle Quader)", *bounds("schritt_input"), key="schritt_input", step=1,
@@ -295,7 +295,7 @@ with st.expander("📐 Mathematische Formulierung"):
 
 **Schwerpunkt.** Für einen Behälter $B$ ist $c_x = \dfrac{\sum_{i \in B} m_i (x_i + w_i/2)}{\sum_{i \in B} m_i}$ und ebenso $c_y$. Der Schwerpunkt liegt im Fenster, wenn $|c_x - C/2| \le f$ und $|c_y - C/2| \le f$. Die Regel *nah* wählt unter den zulässigen Eckpunkten den, der $(c_x - C/2)^2 + (c_y - C/2)^2$ nach dem Setzen minimiert (bei Gleichstand den mit kleinstem $(z, y, x)$). Die harte Regel ab der Schwelle $\theta$ lässt einen Eckpunkt nur zu, wenn der Behälter danach höchstens $\theta C^3$ füllt oder $(c_x, c_y)$ im Fenster liegt.
 
-**Starres Verschieben.** Mit der Hüllbox $[x_{\min}, x_{\max}] \times [y_{\min}, y_{\max}]$ der Ladung eines Behälters wird jeder Quader um $\Delta_x = \max(-x_{\min},\ \min(C - x_{\max},\ \mathrm{rund}(C/2 - c_x)))$ in $x$ und entsprechend $\Delta_y$ in $y$ verschoben. Die Lage der Quader zueinander und alle Stützflächen bleiben; der Schwerpunkt wandert um $\Delta_x$ und $\Delta_y$.
+**Starres Verschieben.** Mit der Bounding Box $[x_{\min}, x_{\max}] \times [y_{\min}, y_{\max}]$ der Ladung eines Behälters wird jeder Quader um $\Delta_x = \max(-x_{\min},\ \min(C - x_{\max},\ \mathrm{rund}(C/2 - c_x)))$ in $x$ und entsprechend $\Delta_y$ in $y$ verschoben. Die Lage der Quader zueinander und alle Stützflächen bleiben; der Schwerpunkt wandert um $\Delta_x$ und $\Delta_y$.
 
 **Schranken.** $L_{\mathrm{Vol}} = \left\lceil \tfrac{1}{C^3} \sum_i w_i d_i h_i \right\rceil \le \mathrm{OPT}$; $L_{\mathrm{gr}} = |\{ i : w_i, d_i, h_i > C/2 \}| \le \mathrm{OPT}$; $L = \max(L_{\mathrm{Vol}}, L_{\mathrm{gr}})$. Die Schranken gelten ohne Stützbedingung; mit Bedingung ist das Optimum nicht kleiner.
 

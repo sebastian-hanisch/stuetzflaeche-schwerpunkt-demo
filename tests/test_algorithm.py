@@ -9,7 +9,7 @@ Handrechnung Mini-Instanz (Behälter 10 mal 10 mal 10; Quader 0: (2,8,2) Masse 1
   Mindest-Stützfläche 80 %: (0,0,4) scheitert (43,75 %), (2,0,4) passt (x 2 bis 6, y 0 bis 8) und liegt auf Quader 1 mit 4 mal 7 = 28 von 32 = 87,5 %.
   Mindest-Stützfläche 100 %: (2,0,4) hat 87,5 % und scheitert, (0,0,6) hat 0 %, (6,0,6) liegt auf Quader 2 mit 3 mal 8 = 24 von 32 = 75 % und scheitert: neuer Behälter, (0,0,0).
 Schwerpunkt bei Mindest-Stützfläche 0 (Quader 3 bei (0,0,4)): Mittelpunkte (1|4), (4|3,5), (7,5|4), (2|4) mit den Massen 1, 3, 3, 1: cx = (1 + 12 + 22,5 + 2) / 8 = 4,6875, cy = (4 + 10,5 + 12 + 4) / 8 = 3,8125.
-  Hüllbox x 0 bis 9, y 0 bis 8: dx liegt in [0, 1], dy in [0, 2]; dx = rund(5 - 4,6875) = 0, dy = rund(5 - 3,8125) = 1: neuer Schwerpunkt (4,6875 | 4,8125).
+  Bounding Box x 0 bis 9, y 0 bis 8: dx liegt in [0, 1], dy in [0, 2]; dx = rund(5 - 4,6875) = 0, dy = rund(5 - 3,8125) = 1: neuer Schwerpunkt (4,6875 | 4,8125).
 Regel nah bei Mindest-Stützfläche 0: Quader 1: (2,0,0) hat den Schwerpunkt (3,25 | 3,625), (0,0,2) den Schwerpunkt (1,75 | 3,625): (2,0,0) liegt näher an (5 | 5). Quader 2: (6,0,0) mit (5,0714 | 3,7857)
   gewinnt gegen (2,0,4). Quader 3: (0,0,4) hat (4,6875 | 3,8125) mit Abstand zum Quadrat 1,5078; (2,0,4) hat (4,9375 | 3,8125) mit 1,4141: nah wählt (2,0,4) statt (0,0,4).
 Harte Regel (Fenster 0,5, Schwelle 20 % des Volumens = 200): Quader 0 und 1 (zusammen 144) sind frei. Quader 2 würde 288 füllen; jeder Behälter-Schwerpunkt liegt in y zwischen 3,5 und 4 (alle Mittelpunkte

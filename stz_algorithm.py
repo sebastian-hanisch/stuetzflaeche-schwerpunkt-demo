@@ -154,7 +154,7 @@ def schwerpunkte(kisten, masse, platz, cap: int, fenster: float) -> list:
 
 
 def verschieben(kisten, masse, platz, cap: int):
-    """Starres Verschieben: je Behälter alle Quader gemeinsam um dieselbe ganze Zahl in x und in y, so dass der Schwerpunkt der Mitte so nahe kommt, wie es die Hüllbox der Ladung erlaubt (die Quader
+    """Starres Verschieben: je Behälter alle Quader gemeinsam um dieselbe ganze Zahl in x und in y, so dass der Schwerpunkt der Mitte so nahe kommt, wie es die Bounding Box der Ladung erlaubt (die Quader
     bleiben im Behälter; Lage zueinander und Stützfläche ändern sich nicht). Gerundet wird auf die nächste ganze Zahl, bei .5 nach oben. Gibt (neue Platzierung, {Behälter: (dx, dy)}) zurück."""
     verschiebung = {}
     for b in range(1 + max((p[1] for p in platz), default=-1)):

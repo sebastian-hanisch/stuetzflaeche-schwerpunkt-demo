@@ -110,7 +110,7 @@ def sidebar_presets():
 
 
 def randomize_seed():
-    """Neue Startzahl und, falls noch ein Handbeispiel gewählt ist, eine Zufallsinstanz mit mittleren Quadern: die Startzahl wirkt nur dort, ein Würfeln ohne sichtbare Wirkung gäbe es sonst."""
+    """Neuer Zufalls-Seed und, falls noch ein Handbeispiel gewählt ist, eine Zufallsinstanz mit mittleren Quadern: der Zufalls-Seed wirkt nur dort, ein Würfeln ohne sichtbare Wirkung gäbe es sonst."""
     st.session_state["seed_input"] = random.randint(0, C.SEED_MAX)
     if st.session_state.get("quelle_select", 0) in C.BEISPIELE:
         st.session_state["quelle_select"] = C.ZUFALL_QUELLEN[0]
